@@ -17,13 +17,13 @@
 - 主从Reactor多线程模型
 - 尽量减少接受连接线程的压力，使其更快的响应更多连接🚀，单独使用1个或多个SubReactor线程处理转发请求。
   - 如果存在多个SubReactor线程，accept获得的客户端SocketChannel可以存放在不同的BlockingQueue中，供多个SubReactor线程消费，以加快dispatch速度🚀
-- 这种方案被证实存在设计问题😟，请参考架构方案三👇
+- 这种方案被证实存在设计问题😟，请参考架构方案三。
 
  ![Project Structure](https://github.com/MagicFollower/chatroom/blob/main/docs/img/update-structure.png)
 
 🚩🚩🚩
 
-🔥再次优化后的一种架构方案（三）🔥
+🔥架构方案（三）🔥
 
 - 将Worker需要执行的任务抽象为Task，由多个Dispatcher统一存放进入TaskQueue，Worker只需要关注于异步消费Task🚀
   - Worker职能单一化，注册与监听功能下方到Dispatcher；

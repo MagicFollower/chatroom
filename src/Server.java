@@ -1,4 +1,4 @@
-package com.job.day23.nio;
+package com.job.day23.nio.src;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -65,7 +65,6 @@ public class Server {
                         // todo 将读操作分发给线程池中线程进行处理 (finished)
                         if (((ThreadPoolExecutor) THREAD_POOL).getActiveCount() != 2) {
                             CompletableFuture.runAsync(() -> {
-                                System.out.println(Thread.currentThread().getName() + ": 接收任务！\uD83D\uDE80");
                                 try {
                                     Selector selector = Selector.open();
                                     for (; ; ) {
@@ -78,8 +77,6 @@ public class Server {
                                         // server端监控到客户端异常断开，需要触发主动关闭操作（客户端断开后如果channel依然open）
                                         // ↑ 这种情况会出现 → 如果直接运行客户端，然后强制关闭程序（客户端关闭时没有主动调用close）
                                         if (selector.select(2000) > 0) {
-                                            // todo check
-                                            System.out.println(selector.selectedKeys().size());
                                             Iterator<SelectionKey> ri = selector.selectedKeys().iterator();
                                             if (ri.hasNext()) {
                                                 SelectionKey next = ri.next();

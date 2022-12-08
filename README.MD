@@ -34,6 +34,7 @@
 
 - 将所有客户端事件全部放到一个TaskQueue中可能不是一个最佳的选择，我们可以为每个客户端设置单独的TaskQueue；
   - 将客户端所有相关的信息，封装为Context（ctx），然后统一管理所有上下文或所有TaskQueue；
+- 由于每一个连接的客户端对应一个Context，我们可以取消单独用于存储在线用户的数据结构；
 - 客户端监听所有上下文或所有TaskQueue，完成事件的异步消费。
 
  ![Project Structure](https://github.com/MagicFollower/chatroom/blob/main/docs/img/update-structure-3.png)

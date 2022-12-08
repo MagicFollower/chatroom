@@ -29,18 +29,20 @@
 
  ![Project Structure](https://github.com/MagicFollower/chatroom/blob/main/docs/img/update-structure-2.png)
 
-🔥优化思路（四）🔥
+🔥优化思路🔥
 
-- 将所有客户端事件全部放到一个TaskQueue中可能不是一个最佳的选择，我们可以为每个客户端设置单独的TaskQueue；
-  - 将客户端所有相关的信息，封装为Context（ctx），然后统一管理所有上下文或所有TaskQueue；
-- 由于每一个连接的客户端对应一个Context，我们可以取消单独用于存储在线用户的数据结构；
+- 将所有客户端事件全部放到一个TaskQueue中可能不是一个最佳的选择；
+  - <u>我们可以为每个客户端设置单独的TaskQueue</u>，或者，<u>每个WorkerThread设置单独的TaskQueue</u>；
+  - 将客户端所有相关的信息，封装为Context（ctx），然后统一管理所有上下文；
+
+- 由于每一个连接的客户端对应一个Context，统一管理ctx后，可以取消单独用于存储在线用户的数据结构；
 - 客户端监听所有上下文或所有TaskQueue，完成事件的异步消费。
 
  ![Project Structure](https://github.com/MagicFollower/chatroom/blob/main/docs/img/update-structure-3.png)
 
 🔥架构方案（四）🔥
 
-- 明确【优化思路（四】中任务队列所在的位置及各个组件的具体职责；
+- <u>每个WorkerThread设置单独的TaskQueue</u>；
 - 提供多类型任务队列（CommonTaskQueue、ScheduledTaskQueue）；
 - 存在问题💣
   - 如果TaskQueue中存在耗时的操作，TaskQueue中的后续任务都将被阻塞。

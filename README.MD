@@ -23,10 +23,9 @@
 
 - 将Worker需要执行的任务抽象为Task，由多个Dispatcher统一存放进入TaskQueue，Worker只需要关注于异步消费Task；
   - <u>Worker职能单一化，注册与监听功能下方到Dispatcher</u>；
-  - 异步消费Task，避免之前方案中出现任务耗时，阻塞整个注册在Worker线程Selector上所有客户端事件的情况💥💥💥
+  - 引入TaskQueue，异步消费Task，避免之前方案中出现任务耗时，阻塞整个注册在Worker线程Selector上所有客户端事件的情况💣
 - 工作任务线程池数量，建议采取可用处理器数*2，合适的线程数能够很好应对部分耗时的处理操作。
   - ```Runtime.getRuntime().availableProcessors()*2```
-- 缺点：线程池线程需要主动监听TaskQueue💣
 
  ![Project Structure](https://github.com/MagicFollower/chatroom/blob/main/docs/img/update-structure-2.png)
 
@@ -36,15 +35,15 @@
   - 将客户端所有相关的信息，封装为Context（ctx），然后统一管理所有上下文或所有TaskQueue；
 - 由于每一个连接的客户端对应一个Context，我们可以取消单独用于存储在线用户的数据结构；
 - 客户端监听所有上下文或所有TaskQueue，完成事件的异步消费。
-- 缺点：线程池线程需要主动监听TaskQueue💣
 
  ![Project Structure](https://github.com/MagicFollower/chatroom/blob/main/docs/img/update-structure-3.png)
 
 🔥架构方案（五）🔥
 
-- 对架构方案三、四的升级，解决[ 线程池线程需要主动监听TaskQueue ]的问题；
-  - 将监听功能重新转移到Worker线程中，此时Worker线程不需要主动监听是否存在任务，当由任务存在时会收到通知。
+- 明确任务队列所在的位置及各个组件的具体职责；
+- 提供多类型任务队列（CommonTaskQueue、ScheduledTaskQueue）；
 
  ![Project Structure](https://github.com/MagicFollower/chatroom/blob/main/docs/img/update-structure-4.png)
 
-💭[Netty](https://netty.io/)架构和当前架构五有着很多类似的地方💭
+
+

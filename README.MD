@@ -46,9 +46,11 @@
   - 动机（Motivation）
     - 维护所有Context是为了什么业务？
     - 如果Context包含的属性过多，有没有替代维护所有Context的方案来实现指定的业务？
-
   - 示例（Example Service）
     - 维护所有在线用户，每个用户可能会有自己的tag、id等信息，为了这个业务，单独封装一个结构是推荐的做法。
+- 存在问题💣
+  - 如果TaskQueue中存在耗时的操作，TaskQueue中的后续任务都将被阻塞。
+
 
 
  ![Project Structure](https://github.com/MagicFollower/chatroom/blob/main/docs/img/update-structure-4.png)

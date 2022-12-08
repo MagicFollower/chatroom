@@ -60,7 +60,7 @@
 - 想法：
   - Dispatcher只需要将<u>raw读写事件（SelectionKey）</u>交给线程池，线程池自动分配线程完成注册、初始化ctx；
     - 减轻Dispatcher的负担，使其更快响应客户端接入；
-  - 此时，Worker线程将不仅仅需要监听TaskQueue（这样做可以提供更多的hook，方便监控整个过程）
+  - 此时，Worker线程将不仅仅需要监听TaskQueue（这样做可以提供更多的hook，便于监控整个过程）
     - select监听注册的所有SocketChannel/客户端；
     - 将事件放入内部的TaskQueue；
     - 执行TaskQueue的事件；

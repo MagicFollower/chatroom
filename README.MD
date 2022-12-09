@@ -65,5 +65,4 @@
     - 将事件放入内部的TaskQueue；
     - 执行TaskQueue的事件；
 
- ![Project Structure](https://github.com/MagicFollower/chatroom/blob/main/docs/img/update-structure-5.png)
-
+ ![Project Structure](https://github.com/MagicFollower/chatroom/blob/main/docs/img/update-structure-6.png)

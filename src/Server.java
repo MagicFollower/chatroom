@@ -63,6 +63,7 @@ public class Server {
                         // 将socketChannel放入阻塞队列
                         blockingQueue.add(socketChannel);
                         // todo 将读操作分发给线程池中线程进行处理 (finished)
+                        // tips: THREAD_POOL大小限制为2，由于使用同步阻塞队列，超出大小限制后CompletableFuture.runAsync会抛出异常，这里进行限制检测
                         if (((ThreadPoolExecutor) THREAD_POOL).getActiveCount() != 2) {
                             CompletableFuture.runAsync(() -> {
                                 try {
